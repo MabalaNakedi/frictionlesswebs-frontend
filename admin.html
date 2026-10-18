@@ -1,1 +1,825 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin — Frictionlesswebs</title><link rel="stylesheet" href="style.css"></head><body><header class="wrap nav"><a class="brand" href="index.html"><i></i>frictionlesswebs</a><nav class="links" style="display:flex"><a href="dashboard.html">Dashboard</a><button class="pill" data-logout>Log out</button></nav></header><main class="wrap dashboard"><div class="eyebrow">Studio admin</div><h1>Project enquiries.</h1><p class="muted">Messages submitted through the homepage contact form appear here.</p><section class="card" data-messages><p class="muted">Loading enquiries…</p></section></main><script src="config.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Studio Admin — Frictionlesswebs</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin-body">
+
+  <!-- MOBILE OVERLAY -->
+  <div class="admin-overlay" data-admin-overlay></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" data-admin-sidebar>
+
+    <div class="admin-sidebar-top">
+
+      <a class="admin-brand" href="index.html">
+        <span class="admin-brand-mark"></span>
+
+        <span>
+          <strong>frictionlesswebs</strong>
+          <small>Studio admin</small>
+        </span>
+      </a>
+
+      <button
+        class="admin-sidebar-close"
+        type="button"
+        data-admin-close
+        aria-label="Close menu"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <nav class="admin-nav">
+
+      <button
+        class="admin-nav-item active"
+        type="button"
+        data-admin-section="overview"
+      >
+        <span>⌂</span>
+        Overview
+      </button>
+
+      <button
+        class="admin-nav-item"
+        type="button"
+        data-admin-section="clients"
+      >
+        <span>◎</span>
+        Clients
+      </button>
+
+      <button
+        class="admin-nav-item"
+        type="button"
+        data-admin-section="enquiries"
+      >
+        <span>✉</span>
+        Enquiries
+
+        <span
+          class="admin-nav-count"
+          data-new-message-count
+        >
+          0
+        </span>
+      </button>
+
+      <button
+        class="admin-nav-item"
+        type="button"
+        data-admin-section="projects"
+      >
+        <span>□</span>
+        Projects
+      </button>
+
+      <button
+        class="admin-nav-item"
+        type="button"
+        data-admin-section="activity"
+      >
+        <span>↻</span>
+        Activity
+      </button>
+
+    </nav>
+
+    <div class="admin-sidebar-bottom">
+
+      <a href="dashboard.html" class="admin-back-link">
+        ← Client dashboard
+      </a>
+
+      <button
+        class="admin-logout"
+        type="button"
+        data-logout
+      >
+        Log out
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN AREA -->
+  <div class="admin-shell">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+
+      <div class="admin-header-left">
+
+        <button
+          class="admin-mobile-menu"
+          type="button"
+          data-admin-menu
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
+        <div>
+          <small class="admin-header-label">
+            FRICTIONLESSWEBS
+          </small>
+
+          <strong>Studio workspace</strong>
+        </div>
+
+      </div>
+
+      <div class="admin-profile">
+
+        <div class="admin-avatar">
+          A
+        </div>
+
+        <div>
+          <strong data-admin-name>Admin</strong>
+          <small>Administrator</small>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="admin-main">
+
+      <!-- ======================================
+           OVERVIEW
+      ======================================= -->
+
+      <section
+        class="admin-page active"
+        data-admin-page="overview"
+      >
+
+        <div class="admin-page-heading">
+
+          <div>
+            <div class="eyebrow">
+              STUDIO ADMIN
+            </div>
+
+            <h1>
+              Good to see you,
+              <span data-admin-greeting>Admin</span>.
+            </h1>
+
+            <p>
+              Here's what's happening across
+              Frictionlesswebs.
+            </p>
+          </div>
+
+          <button
+            class="admin-primary-btn"
+            type="button"
+            data-open-project-modal
+          >
+            + New project
+          </button>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="admin-stats">
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-top">
+              <span>CLIENTS</span>
+              <span class="admin-stat-icon">◎</span>
+            </div>
+
+            <strong data-stat-clients>0</strong>
+
+            <small>
+              Registered accounts
+            </small>
+
+          </article>
+
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-top">
+              <span>NEW ENQUIRIES</span>
+              <span class="admin-stat-icon">✉</span>
+            </div>
+
+            <strong data-stat-messages>0</strong>
+
+            <small>
+              Waiting for attention
+            </small>
+
+          </article>
+
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-top">
+              <span>ACTIVE PROJECTS</span>
+              <span class="admin-stat-icon">□</span>
+            </div>
+
+            <strong data-stat-active>0</strong>
+
+            <small>
+              Currently in progress
+            </small>
+
+          </article>
+
+
+          <article class="admin-stat-card">
+
+            <div class="admin-stat-top">
+              <span>COMPLETED</span>
+              <span class="admin-stat-icon">✓</span>
+            </div>
+
+            <strong data-stat-completed>0</strong>
+
+            <small>
+              Finished projects
+            </small>
+
+          </article>
+
+        </div>
+
+
+        <!-- OVERVIEW GRID -->
+
+        <div class="admin-overview-grid">
+
+          <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+              <div>
+                <span class="admin-panel-label">
+                  RECENT
+                </span>
+
+                <h2>
+                  Latest enquiries
+                </h2>
+              </div>
+
+              <button
+                class="admin-text-btn"
+                type="button"
+                data-go-section="enquiries"
+              >
+                View all →
+              </button>
+
+            </div>
+
+            <div data-recent-enquiries>
+
+              <div class="admin-loading">
+                Loading enquiries…
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+              <div>
+                <span class="admin-panel-label">
+                  PROJECTS
+                </span>
+
+                <h2>
+                  Active work
+                </h2>
+              </div>
+
+              <button
+                class="admin-text-btn"
+                type="button"
+                data-go-section="projects"
+              >
+                View all →
+              </button>
+
+            </div>
+
+            <div data-overview-projects>
+
+              <div class="admin-loading">
+                Loading projects…
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+
+      <!-- ======================================
+           CLIENTS
+      ======================================= -->
+
+      <section
+        class="admin-page"
+        data-admin-page="clients"
+      >
+
+        <div class="admin-page-heading">
+
+          <div>
+
+            <div class="eyebrow">
+              CLIENTS
+            </div>
+
+            <h1>Client accounts.</h1>
+
+            <p>
+              View the people registered with
+              Frictionlesswebs and their projects.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="admin-panel">
+
+          <div class="admin-toolbar">
+
+            <div class="admin-search">
+
+              <input
+                type="search"
+                placeholder="Search clients..."
+                data-client-search
+              >
+
+            </div>
+
+            <span
+              class="admin-result-count"
+              data-client-result-count
+            >
+              0 clients
+            </span>
+
+          </div>
+
+          <div
+            class="admin-table-wrap"
+            data-clients
+          >
+            <div class="admin-loading">
+              Loading clients…
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ======================================
+           ENQUIRIES
+      ======================================= -->
+
+      <section
+        class="admin-page"
+        data-admin-page="enquiries"
+      >
+
+        <div class="admin-page-heading">
+
+          <div>
+
+            <div class="eyebrow">
+              ENQUIRIES
+            </div>
+
+            <h1>Project enquiries.</h1>
+
+            <p>
+              Messages submitted through your
+              website appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="admin-panel">
+
+          <div class="admin-toolbar">
+
+            <div class="admin-filter-group">
+
+              <button
+                class="admin-filter active"
+                type="button"
+                data-message-filter="all"
+              >
+                All
+              </button>
+
+              <button
+                class="admin-filter"
+                type="button"
+                data-message-filter="new"
+              >
+                New
+              </button>
+
+              <button
+                class="admin-filter"
+                type="button"
+                data-message-filter="contacted"
+              >
+                Contacted
+              </button>
+
+              <button
+                class="admin-filter"
+                type="button"
+                data-message-filter="closed"
+              >
+                Closed
+              </button>
+
+            </div>
+
+          </div>
+
+          <div data-admin-messages>
+
+            <div class="admin-loading">
+              Loading enquiries…
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ======================================
+           PROJECTS
+      ======================================= -->
+
+      <section
+        class="admin-page"
+        data-admin-page="projects"
+      >
+
+        <div class="admin-page-heading">
+
+          <div>
+
+            <div class="eyebrow">
+              PROJECTS
+            </div>
+
+            <h1>Studio projects.</h1>
+
+            <p>
+              Create projects, assign clients and
+              keep progress up to date.
+            </p>
+
+          </div>
+
+          <button
+            class="admin-primary-btn"
+            type="button"
+            data-open-project-modal
+          >
+            + New project
+          </button>
+
+        </div>
+
+
+        <div data-projects>
+
+          <div class="admin-loading">
+            Loading projects…
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ======================================
+           ACTIVITY
+      ======================================= -->
+
+      <section
+        class="admin-page"
+        data-admin-page="activity"
+      >
+
+        <div class="admin-page-heading">
+
+          <div>
+
+            <div class="eyebrow">
+              ACTIVITY
+            </div>
+
+            <h1>Studio activity.</h1>
+
+            <p>
+              A timeline of recent client and
+              project activity.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="admin-panel">
+
+          <div data-admin-activity>
+
+            <div class="admin-loading">
+              Loading activity…
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ==========================================
+       PROJECT MODAL
+  =========================================== -->
+
+  <div
+    class="admin-modal"
+    data-project-modal
+    hidden
+  >
+
+    <div
+      class="admin-modal-backdrop"
+      data-close-project-modal
+    ></div>
+
+    <div class="admin-modal-card">
+
+      <div class="admin-modal-heading">
+
+        <div>
+          <span class="admin-panel-label">
+            PROJECT
+          </span>
+
+          <h2 data-project-modal-title>
+            Create project
+          </h2>
+        </div>
+
+        <button
+          class="admin-modal-close"
+          type="button"
+          data-close-project-modal
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form data-project-form>
+
+        <input
+          type="hidden"
+          name="projectId"
+        >
+
+
+        <label class="admin-field">
+
+          <span>Client</span>
+
+          <select
+            name="userId"
+            data-project-client
+          >
+
+            <option value="">
+              Select a client
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label class="admin-field">
+
+          <span>Project name</span>
+
+          <input
+            name="name"
+            type="text"
+            required
+            maxlength="150"
+            placeholder="e.g. Company website"
+          >
+
+        </label>
+
+
+        <label class="admin-field">
+
+          <span>Description</span>
+
+          <textarea
+            name="description"
+            rows="4"
+            placeholder="Describe the project..."
+          ></textarea>
+
+        </label>
+
+
+        <div class="admin-form-grid">
+
+          <label class="admin-field">
+
+            <span>Status</span>
+
+            <select name="status">
+
+              <option value="planning">
+                Planning
+              </option>
+
+              <option value="active">
+                Active
+              </option>
+
+              <option value="review">
+                Review
+              </option>
+
+              <option value="completed">
+                Completed
+              </option>
+
+              <option value="paused">
+                Paused
+              </option>
+
+              <option value="cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </label>
+
+
+          <label class="admin-field">
+
+            <span>Stage</span>
+
+            <input
+              name="stage"
+              type="text"
+              value="Planning"
+              placeholder="e.g. Development"
+            >
+
+          </label>
+
+        </div>
+
+
+        <label class="admin-field">
+
+          <span>
+            Progress
+            <strong data-progress-value>0%</strong>
+          </span>
+
+          <input
+            name="progress"
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            data-progress-input
+          >
+
+        </label>
+
+
+        <div class="admin-form-grid">
+
+          <label class="admin-field">
+
+            <span>Start date</span>
+
+            <input
+              name="startedAt"
+              type="date"
+            >
+
+          </label>
+
+
+          <label class="admin-field">
+
+            <span>Estimated completion</span>
+
+            <input
+              name="estimatedCompletion"
+              type="date"
+            >
+
+          </label>
+
+        </div>
+
+
+        <div
+          class="notice"
+          data-project-notice
+        ></div>
+
+
+        <div class="admin-modal-actions">
+
+          <button
+            class="admin-secondary-btn"
+            type="button"
+            data-close-project-modal
+          >
+            Cancel
+          </button>
+
+          <button
+            class="admin-primary-btn"
+            type="submit"
+          >
+            Save project
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+          </html>
