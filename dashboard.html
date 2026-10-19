@@ -1,25 +1,23 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>My Workspace — Frictionlesswebs</title>
+  <title>Dashboard — Frictionlesswebs</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="portal-body">
 
-  <!-- ============================= -->
-  <!-- TOP NAVIGATION -->
-  <!-- ============================= -->
+  <!-- TOP BAR -->
 
   <header class="portal-topbar">
 
     <a class="brand" href="index.html">
-      <i></i>
-      frictionlesswebs
+      <i></i>frictionlesswebs
     </a>
 
     <div class="portal-top-actions">
@@ -30,71 +28,71 @@
         hidden
         href="admin.html"
       >
-        Admin
+        Studio Admin
       </a>
 
       <button
         class="notification-button"
         type="button"
-        aria-label="Notifications"
+        data-section-button="activity"
+        aria-label="Activity"
       >
-        🔔
+        ◇
+
         <span class="notification-dot"></span>
       </button>
 
       <div class="top-profile">
-        <div class="avatar">
-          <span data-user-initial>F</span>
+
+        <div class="avatar" data-user-initial>
+          C
         </div>
 
         <div class="top-profile-text">
-          <small>Signed in as</small>
-          <strong data-user>Client</strong>
-        </div>
-      </div>
 
-      <button class="pill" data-logout>
-        Log out
-      </button>
+          <small>CLIENT</small>
+
+          <strong data-user>
+            Client
+          </strong>
+
+        </div>
+
+      </div>
 
     </div>
 
   </header>
 
 
-  <!-- ============================= -->
-  <!-- MOBILE MENU BUTTON -->
-  <!-- ============================= -->
-
-  <button
-    class="portal-menu-button"
-    type="button"
-    aria-label="Open dashboard menu"
-    data-portal-menu
-  >
-    ☰
-  </button>
-
-
-  <!-- ============================= -->
-  <!-- PORTAL -->
-  <!-- ============================= -->
+  <!-- MAIN PORTAL -->
 
   <div class="portal-layout">
 
     <!-- SIDEBAR -->
 
-    <aside class="portal-sidebar" data-sidebar>
+    <aside
+      class="portal-sidebar"
+      data-portal-sidebar
+    >
 
       <div class="sidebar-profile">
 
-        <div class="sidebar-avatar">
-          <span data-user-initial>F</span>
+        <div
+          class="sidebar-avatar"
+          data-user-initial
+        >
+          C
         </div>
 
         <div>
-          <small>YOUR WORKSPACE</small>
-          <h3 data-user>Client</h3>
+
+          <small>CLIENT WORKSPACE</small>
+
+          <h3 data-user>
+            Client
+          </h3>
+
         </div>
 
       </div>
@@ -104,46 +102,65 @@
 
         <button
           class="portal-nav-link active"
-          data-section="overview"
+          type="button"
+          data-section-button="overview"
         >
           <span>⌂</span>
           Overview
         </button>
 
-        <button
-          class="portal-nav-link"
-          data-section="project"
-        >
-          <span>◇</span>
-          My Project
-        </button>
 
         <button
           class="portal-nav-link"
-          data-section="messages"
+          type="button"
+          data-section-button="projects"
         >
-          <span>✉</span>
-          Messages
+          <span>□</span>
+          My Projects
 
-          <span class="nav-badge">
+          <span
+            class="nav-badge"
+            data-project-count
+          >
             0
           </span>
         </button>
 
-        <button
-          class="portal-nav-link"
-          data-section="files"
-        >
-          <span>□</span>
-          Files
-        </button>
 
         <button
           class="portal-nav-link"
-          data-section="activity"
+          type="button"
+          data-section-button="messages"
         >
-          <span>◷</span>
+          <span>✉</span>
+          Enquiries
+
+          <span
+            class="nav-badge"
+            data-message-count
+          >
+            0
+          </span>
+        </button>
+
+
+        <button
+          class="portal-nav-link"
+          type="button"
+          data-section-button="activity"
+        >
+          <span>↻</span>
           Activity
+        </button>
+
+
+        <button
+          class="portal-nav-link"
+          type="button"
+          data-section-button="profile"
+        >
+          <span>◎</span>
+          Profile
         </button>
 
       </nav>
@@ -153,39 +170,29 @@
 
         <button
           class="portal-nav-link"
-          data-section="profile"
+          type="button"
+          data-logout
         >
-          <span>○</span>
-          Profile
+          <span>←</span>
+          Log out
         </button>
-
-        <a
-          class="portal-nav-link"
-          href="contact.html"
-        >
-          <span>?</span>
-          Get support
-        </a>
 
       </div>
 
     </aside>
 
 
-    <!-- ============================= -->
-    <!-- MAIN CONTENT -->
-    <!-- ============================= -->
+    <!-- CONTENT -->
 
     <main class="portal-main">
 
-
-      <!-- ========================= -->
-      <!-- OVERVIEW -->
-      <!-- ========================= -->
+      <!-- =============================
+           OVERVIEW
+      ============================== -->
 
       <section
         class="portal-section active"
-        id="overview"
+        data-section="overview"
       >
 
         <div class="dashboard-welcome">
@@ -193,25 +200,29 @@
           <div>
 
             <div class="eyebrow">
-              CLIENT WORKSPACE
+              CLIENT PORTAL
             </div>
 
             <h1>
               Hey,
-              <span data-user>Client</span>.
+              <span data-user>client</span>.
             </h1>
 
             <p class="muted">
-              Welcome back to your personal Frictionlesswebs
-              workspace. Follow your project, receive updates
-              and stay connected with our team.
+              Keep track of your projects,
+              progress and recent activity with
+              Frictionlesswebs.
             </p>
 
           </div>
 
+
           <div class="account-status">
+
             <span></span>
+
             Account active
+
           </div>
 
         </div>
@@ -224,13 +235,44 @@
           <article class="dashboard-stat">
 
             <div class="stat-icon">
+              □
+            </div>
+
+            <div>
+
+              <small>PROJECTS</small>
+
+              <h2 data-overview-project-count>
+                0
+              </h2>
+
+              <p>
+                Projects in your workspace
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="dashboard-stat">
+
+            <div class="stat-icon">
               ◇
             </div>
 
             <div>
-              <small>ACTIVE PROJECTS</small>
-              <h2 data-project-count>0</h2>
-              <p>No active projects yet</p>
+
+              <small>ACTIVE</small>
+
+              <h2 data-active-project-count>
+                0
+              </h2>
+
+              <p>
+                Currently being worked on
+              </p>
+
             </div>
 
           </article>
@@ -243,24 +285,17 @@
             </div>
 
             <div>
-              <small>MESSAGES</small>
-              <h2 data-message-count>0</h2>
-              <p>Messages from our team</p>
-            </div>
 
-          </article>
+              <small>ENQUIRIES</small>
 
+              <h2 data-overview-message-count>
+                0
+              </h2>
 
-          <article class="dashboard-stat">
+              <p>
+                Enquiries linked to your account
+              </p>
 
-            <div class="stat-icon">
-              ✓
-            </div>
-
-            <div>
-              <small>ACCOUNT</small>
-              <h2>Active</h2>
-              <p>Your client account is ready</p>
             </div>
 
           </article>
@@ -268,152 +303,124 @@
         </div>
 
 
-        <!-- MAIN GRID -->
+        <!-- MAIN OVERVIEW -->
 
         <div class="dashboard-content-grid">
 
-
-          <!-- PROJECT CARD -->
-
-          <article class="workspace-card project-overview-card">
+          <article
+            class="workspace-card"
+            data-main-project
+          >
 
             <div class="workspace-card-header">
 
               <div>
-                <small class="section-label">
-                  YOUR PROJECT
-                </small>
+
+                <span class="section-label">
+                  CURRENT PROJECT
+                </span>
 
                 <h2>
-                  Your next project starts here.
+                  Loading project…
                 </h2>
-              </div>
 
-              <span class="project-status">
-                No project
-              </span>
-
-            </div>
-
-
-            <p class="muted">
-              Once your project is created by the
-              Frictionlesswebs team, you'll be able to
-              track its progress here.
-            </p>
-
-
-            <div class="project-progress">
-
-              <div class="progress-information">
-                <span>Overall progress</span>
-                <strong>0%</strong>
-              </div>
-
-              <div class="progress-track">
-                <div
-                  class="progress-bar"
-                  style="width:0%"
-                ></div>
               </div>
 
             </div>
-
-
-            <div class="project-details">
-
-              <div>
-                <small>STAGE</small>
-                <strong>Waiting</strong>
-              </div>
-
-              <div>
-                <small>STARTED</small>
-                <strong>—</strong>
-              </div>
-
-              <div>
-                <small>ESTIMATED COMPLETION</small>
-                <strong>—</strong>
-              </div>
-
-            </div>
-
-
-            <button
-              class="dashboard-action-button"
-              data-section-button="project"
-            >
-              View project
-              <span>→</span>
-            </button>
 
           </article>
 
 
-          <!-- QUICK ACTIONS -->
-
           <article class="workspace-card">
 
-            <small class="section-label">
-              QUICK ACTIONS
-            </small>
+            <div class="workspace-card-header">
 
-            <h2>
-              What would you like to do?
-            </h2>
+              <div>
+
+                <span class="section-label">
+                  QUICK ACTIONS
+                </span>
+
+                <h2>
+                  Your workspace
+                </h2>
+
+              </div>
+
+            </div>
 
 
             <div class="quick-actions">
 
-              <button data-section-button="messages">
-                <span>✉</span>
+              <button
+                type="button"
+                data-section-button="projects"
+              >
 
-                <div>
-                  <strong>
-                    Message our team
-                  </strong>
-
-                  <small>
-                    Ask us anything about your project
-                  </small>
-                </div>
-
-                <b>→</b>
-              </button>
-
-
-              <button data-section-button="files">
                 <span>□</span>
 
                 <div>
+
                   <strong>
-                    Project files
+                    View projects
                   </strong>
 
                   <small>
-                    View your shared files
+                    See progress and timelines
                   </small>
+
                 </div>
 
-                <b>→</b>
+                →
+
               </button>
 
 
-              <button data-section-button="profile">
-                <span>○</span>
+              <button
+                type="button"
+                data-section-button="messages"
+              >
+
+                <span>✉</span>
 
                 <div>
+
                   <strong>
-                    Your profile
+                    View enquiries
                   </strong>
 
                   <small>
-                    View your account information
+                    See your submitted enquiries
                   </small>
+
                 </div>
 
-                <b>→</b>
+                →
+
+              </button>
+
+
+              <button
+                type="button"
+                data-section-button="activity"
+              >
+
+                <span>↻</span>
+
+                <div>
+
+                  <strong>
+                    Recent activity
+                  </strong>
+
+                  <small>
+                    See project updates
+                  </small>
+
+                </div>
+
+                →
+
               </button>
 
             </div>
@@ -423,53 +430,44 @@
         </div>
 
 
-        <!-- ACTIVITY PREVIEW -->
+        <!-- RECENT ACTIVITY -->
 
         <article class="workspace-card activity-preview">
 
           <div class="workspace-card-header">
 
             <div>
-              <small class="section-label">
-                RECENT ACTIVITY
-              </small>
+
+              <span class="section-label">
+                ACTIVITY
+              </span>
 
               <h2>
-                What's happening
+                Recent updates
               </h2>
+
             </div>
+
 
             <button
               class="text-button"
+              type="button"
               data-section-button="activity"
             >
-              View all
+              View all →
             </button>
 
           </div>
 
 
-          <div class="activity-list">
+          <div
+            class="activity-list"
+            data-overview-activity
+          >
 
-            <div class="activity-item">
-
-              <div class="activity-dot"></div>
-
-              <div>
-                <strong>
-                  Welcome to Frictionlesswebs
-                </strong>
-
-                <p>
-                  Your client workspace is ready.
-                </p>
-              </div>
-
-              <small>
-                Recently
-              </small>
-
-            </div>
+            <p class="muted">
+              Loading activity…
+            </p>
 
           </div>
 
@@ -478,188 +476,96 @@
       </section>
 
 
-
-      <!-- ========================= -->
-      <!-- PROJECT PAGE -->
-      <!-- ========================= -->
+      <!-- =============================
+           PROJECTS
+      ============================== -->
 
       <section
         class="portal-section"
-        id="project"
+        data-section="projects"
       >
 
         <div class="section-heading">
 
           <div class="eyebrow">
-            MY PROJECT
+            PROJECTS
           </div>
 
           <h1>
-            Your project.
+            My projects.
           </h1>
 
           <p class="muted">
-            Everything related to your Frictionlesswebs
-            project will live here.
+            Follow the progress of your work
+            with Frictionlesswebs.
           </p>
 
         </div>
 
 
-        <div class="empty-workspace">
+        <div data-client-projects>
 
-          <div class="empty-icon">
-            ◇
-          </div>
-
-          <h2>
-            No project yet.
-          </h2>
-
-          <p>
-            When our team creates your project,
-            its progress, milestones and information
-            will appear here.
+          <p class="muted">
+            Loading projects…
           </p>
-
-          <a
-            href="contact.html"
-            class="dashboard-primary-button"
-          >
-            Start a project
-          </a>
 
         </div>
 
       </section>
 
 
-
-      <!-- ========================= -->
-      <!-- MESSAGES -->
-      <!-- ========================= -->
+      <!-- =============================
+           MESSAGES / ENQUIRIES
+      ============================== -->
 
       <section
         class="portal-section"
-        id="messages"
+        data-section="messages"
       >
 
         <div class="section-heading">
 
           <div class="eyebrow">
-            MESSAGES
+            ENQUIRIES
           </div>
 
           <h1>
-            Talk to us.
+            Your enquiries.
           </h1>
 
           <p class="muted">
-            Keep your project conversations in one place.
+            Messages and project enquiries
+            associated with your account.
           </p>
 
         </div>
 
 
-        <div class="message-workspace">
+        <div
+          class="message-workspace"
+          data-client-messages
+        >
 
           <div class="message-history">
 
-            <div class="empty-messages">
-
-              <span>✉</span>
-
-              <h2>
-                No conversations yet.
-              </h2>
-
-              <p>
-                Send a message to the Frictionlesswebs team.
-              </p>
-
-            </div>
+            <p class="muted">
+              Loading enquiries…
+            </p>
 
           </div>
-
-
-          <form
-            class="portal-message-form"
-            data-portal-message
-          >
-
-            <textarea
-              placeholder="Write a message..."
-              rows="4"
-              required
-            ></textarea>
-
-            <button type="submit">
-              Send message
-            </button>
-
-          </form>
 
         </div>
 
       </section>
 
 
-
-      <!-- ========================= -->
-      <!-- FILES -->
-      <!-- ========================= -->
-
-      <section
-        class="portal-section"
-        id="files"
-      >
-
-        <div class="section-heading">
-
-          <div class="eyebrow">
-            FILES
-          </div>
-
-          <h1>
-            Project files.
-          </h1>
-
-          <p class="muted">
-            Designs, documents and project assets shared
-            with you will appear here.
-          </p>
-
-        </div>
-
-
-        <div class="empty-workspace">
-
-          <div class="empty-icon">
-            □
-          </div>
-
-          <h2>
-            No files shared yet.
-          </h2>
-
-          <p>
-            Files uploaded to your project by our team
-            will be available from this space.
-          </p>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ========================= -->
-      <!-- ACTIVITY -->
-      <!-- ========================= -->
+      <!-- =============================
+           ACTIVITY
+      ============================== -->
 
       <section
         class="portal-section"
-        id="activity"
+        data-section="activity"
       >
 
         <div class="section-heading">
@@ -669,12 +575,12 @@
           </div>
 
           <h1>
-            Your timeline.
+            Project activity.
           </h1>
 
           <p class="muted">
-            Follow updates and changes to your account
-            and projects.
+            Updates made to your projects by
+            the Frictionlesswebs team.
           </p>
 
         </div>
@@ -682,28 +588,14 @@
 
         <article class="workspace-card">
 
-          <div class="activity-list">
+          <div
+            class="activity-list"
+            data-client-activity
+          >
 
-            <div class="activity-item">
-
-              <div class="activity-dot"></div>
-
-              <div>
-                <strong>
-                  Account created
-                </strong>
-
-                <p>
-                  Your Frictionlesswebs workspace
-                  was successfully created.
-                </p>
-              </div>
-
-              <small>
-                Recently
-              </small>
-
-            </div>
+            <p class="muted">
+              Loading activity…
+            </p>
 
           </div>
 
@@ -712,14 +604,13 @@
       </section>
 
 
-
-      <!-- ========================= -->
-      <!-- PROFILE -->
-      <!-- ========================= -->
+      <!-- =============================
+           PROFILE
+      ============================== -->
 
       <section
         class="portal-section"
-        id="profile"
+        data-section="profile"
       >
 
         <div class="section-heading">
@@ -733,8 +624,8 @@
           </h1>
 
           <p class="muted">
-            Your personal Frictionlesswebs account
-            information.
+            The account connected to your
+            Frictionlesswebs workspace.
           </p>
 
         </div>
@@ -742,187 +633,63 @@
 
         <article class="workspace-card profile-card">
 
-          <div class="large-profile-avatar">
-            <span data-user-initial>F</span>
+          <div
+            class="large-profile-avatar"
+            data-user-initial
+          >
+            C
           </div>
 
 
           <div class="profile-information">
 
-            <small>
-              CLIENT
-            </small>
+            <small>CLIENT</small>
 
-            <h2 data-user>
+            <h2 data-profile-name>
               Client
             </h2>
 
-            <p class="muted">
-              Frictionlesswebs client account
+            <p
+              class="muted"
+              data-profile-email
+            >
+              —
             </p>
 
           </div>
 
 
           <div class="profile-status">
+
             <span></span>
-            Active account
+
+            Active
+
           </div>
 
         </article>
 
       </section>
 
-
     </main>
 
   </div>
 
 
+  <!-- MOBILE MENU -->
+
+  <button
+    class="portal-menu-button"
+    type="button"
+    data-portal-menu
+    aria-label="Open dashboard menu"
+  >
+    ☰
+  </button>
+
+
   <script src="config.js"></script>
   <script src="app.js"></script>
 
-  <!-- DASHBOARD NAVIGATION -->
-
-  <script>
-
-    const navLinks =
-      document.querySelectorAll("[data-section]");
-
-    const sectionButtons =
-      document.querySelectorAll("[data-section-button]");
-
-    const sections =
-      document.querySelectorAll(".portal-section");
-
-    const sidebar =
-      document.querySelector("[data-sidebar]");
-
-    const menuButton =
-      document.querySelector("[data-portal-menu]");
-
-
-    function openSection(sectionName) {
-
-      sections.forEach(section => {
-
-        section.classList.remove("active");
-
-      });
-
-
-      navLinks.forEach(link => {
-
-        link.classList.remove("active");
-
-      });
-
-
-      const selectedSection =
-        document.getElementById(sectionName);
-
-      if (selectedSection) {
-
-        selectedSection.classList.add("active");
-
-      }
-
-
-      const selectedLink =
-        document.querySelector(
-          `[data-section="${sectionName}"]`
-        );
-
-      if (selectedLink) {
-
-        selectedLink.classList.add("active");
-
-      }
-
-
-      if (sidebar) {
-
-        sidebar.classList.remove("open");
-
-      }
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    }
-
-
-    navLinks.forEach(link => {
-
-      link.addEventListener("click", () => {
-
-        openSection(
-          link.dataset.section
-        );
-
-      });
-
-    });
-
-
-    sectionButtons.forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        openSection(
-          button.dataset.sectionButton
-        );
-
-      });
-
-    });
-
-
-    if (menuButton) {
-
-      menuButton.addEventListener("click", () => {
-
-        sidebar.classList.toggle("open");
-
-      });
-
-    }
-
-
-    /*
-    --------------------------------
-    USER INITIAL
-    --------------------------------
-    */
-
-    setTimeout(() => {
-
-      const user =
-        document.querySelector("[data-user]");
-
-      if (!user) return;
-
-      const name =
-        user.textContent.trim();
-
-      const initial =
-        name.charAt(0).toUpperCase();
-
-      document
-        .querySelectorAll("[data-user-initial]")
-        .forEach(element => {
-
-          element.textContent =
-            initial || "F";
-
-        });
-
-    }, 500);
-
-  </script>
-
 </body>
-            </html>
+</html>
