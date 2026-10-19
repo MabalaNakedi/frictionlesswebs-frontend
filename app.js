@@ -2040,3 +2040,1134 @@ function dateInputValue(value) {
     .slice(0, 10);
 
     }
+
+/* =========================================================
+   CLIENT PORTAL APPLICATION
+========================================================= */
+
+const clientPortal =
+  document.querySelector('.portal-body');
+
+if (clientPortal) {
+  initClientPortal();
+}
+
+
+async function initClientPortal() {
+
+  const state = {
+    user: null,
+    projects: [],
+    messages: [],
+    activity: []
+  };
+
+
+  /* =======================================================
+     VERIFY USER
+  ======================================================= */
+
+  try {
+
+    const me =
+      await request('/api/me');
+
+    state.user =
+      me.user;
+
+    if (!state.user) {
+
+      location.href =
+        'login.html';
+
+      return;
+    }
+
+  } catch {
+
+    location.href =
+      'login.html';
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     USER INFORMATION
+  ======================================================= */
+
+  const name =
+    state.user.name || 'Client';
+
+  const initial =
+    name
+      .charAt(0)
+      .toUpperCase();
+
+
+  document
+    .querySelectorAll('[data-user]')
+    .forEach(element => {
+
+      element.textContent =
+        name;
+
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-user-initial]'
+    )
+    .forEach(element => {
+
+      element.textContent =
+        initial;
+
+    });
+
+
+  const profileName =
+    document.querySelector(
+      '[data-profile-name]'
+    );
+
+  if (profileName) {
+    profileName.textContent =
+      name;
+  }
+
+
+  const profileEmail =
+    document.querySelector(
+      '[data-profile-email]'
+    );
+
+  if (profileEmail) {
+
+    profileEmail.textContent =
+      state.user.email || '—';
+
+  }
+
+
+  /* ADMIN LINK */
+
+  const adminLink =
+    document.querySelector(
+      '[data-admin-link]'
+    );
+
+  if (
+    adminLink &&
+    state.user.role === 'admin'
+  ) {
+
+    adminLink.hidden =
+      false;
+
+  }
+
+
+  /* =======================================================
+     PORTAL NAVIGATION
+  ======================================================= */
+
+  const sidebar =
+    document.querySelector(
+      '[data-portal-sidebar]'
+    );
+
+  const menuButton =
+    document.querySelector(
+      '[data-portal-menu]'
+    );
+
+
+  function showSection(section) {
+
+    document
+      .querySelectorAll(
+        '[data-section]'
+      )
+      .forEach(element => {
+
+        element.classList.toggle(
+          'active',
+          element.dataset.section ===
+            section
+        );
+
+      });
+
+
+    document
+      .querySelectorAll(
+        '.portal-nav [data-section-button]'
+      )
+      .forEach(button => {
+
+        button.classList.toggle(
+          'active',
+          button.dataset.sectionButton ===
+            section
+        );
+
+      });
+
+
+    sidebar?.classList.remove(
+      'open'
+    );
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+  }
+
+
+  document
+    .querySelectorAll(
+      '[data-section-button]'
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        'click',
+        () => {
+
+          showSection(
+            button.dataset.sectionButton
+          );
+
+        }
+      );
+
+    });
+
+
+  menuButton?.addEventListener(
+    'click',
+    () => {
+
+      sidebar?.classList.toggle(
+        'open'
+      );
+
+    }
+  );
+
+
+  /* =======================================================
+     LOAD DATA FROM BACKEND
+  ======================================================= */
+
+  async function loadPortal() {
+
+    try {
+
+      const [
+        projectData,
+        messageData,
+        activityData
+      ] = await Promise.all([
+
+        request('/api/projects'),
+
+        request('/api/my-messages'),
+
+        request('/api/activity')
+
+      ]);
+
+
+      state.projects =
+        projectData.projects || [];
+
+
+      state.messages =
+        messageData.messages || [];
+
+
+      state.activity =
+        activityData.activity || [];
+
+
+      renderStats();
+
+      renderMainProject();
+
+      renderProjects();
+
+      renderMessages();
+
+      renderActivity();
+
+    } catch (error) {
+
+      console.error(
+        'CLIENT PORTAL ERROR:',
+        error
+      );
+
+      if (error.status === 401) {
+
+        localStorage.removeItem(
+          'fw_token'
+        );
+
+        location.href =
+          'login.html';
+
+      }
+
+    }
+
+  }
+
+
+  /* =======================================================
+     DASHBOARD STATS
+  ======================================================= */
+
+  function renderStats() {
+
+    const activeProjects =
+      state.projects.filter(
+        project =>
+          ![
+            'completed',
+            'cancelled'
+          ].includes(project.status)
+      );
+
+
+    setPortalText(
+      '[data-project-count]',
+      state.projects.length
+    );
+
+
+    setPortalText(
+      '[data-message-count]',
+      state.messages.length
+    );
+
+
+    setPortalText(
+      '[data-overview-project-count]',
+      state.projects.length
+    );
+
+
+    setPortalText(
+      '[data-active-project-count]',
+      activeProjects.length
+    );
+
+
+    setPortalText(
+      '[data-overview-message-count]',
+      state.messages.length
+    );
+
+  }
+
+
+  /* =======================================================
+     MAIN PROJECT
+  ======================================================= */
+
+  function renderMainProject() {
+
+    const container =
+      document.querySelector(
+        '[data-main-project]'
+      );
+
+    if (!container) return;
+
+
+    const project =
+      state.projects.find(
+        item =>
+          ![
+            'completed',
+            'cancelled'
+          ].includes(item.status)
+      ) || state.projects[0];
+
+
+    if (!project) {
+
+      container.innerHTML = `
+
+        <div class="empty-workspace">
+
+          <div class="empty-icon">
+            □
+          </div>
+
+          <h2>
+            No project yet.
+          </h2>
+
+          <p>
+            Once the Frictionlesswebs team
+            creates a project for your account,
+            it will appear here automatically.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    const progress =
+      safeProgress(
+        project.progress
+      );
+
+
+    container.innerHTML = `
+
+      <div class="workspace-card-header">
+
+        <div>
+
+          <span class="section-label">
+            CURRENT PROJECT
+          </span>
+
+          <h2>
+            ${esc(project.name)}
+          </h2>
+
+          <p class="muted">
+            ${esc(
+              project.description ||
+              'Your project is underway.'
+            )}
+          </p>
+
+        </div>
+
+
+        <span class="project-status">
+
+          ${esc(
+            prettyStatus(
+              project.status
+            )
+          )}
+
+        </span>
+
+      </div>
+
+
+      <div class="project-progress">
+
+        <div class="progress-information">
+
+          <span>
+            Project progress
+          </span>
+
+          <strong>
+            ${progress}%
+          </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-bar"
+            style="width:${progress}%"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <div class="project-details">
+
+        <div>
+
+          <small>
+            CURRENT STAGE
+          </small>
+
+          <strong>
+            ${esc(
+              project.stage ||
+              'Planning'
+            )}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <small>
+            STARTED
+          </small>
+
+          <strong>
+            ${clientDate(
+              project.started_at
+            )}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <small>
+            EST. COMPLETION
+          </small>
+
+          <strong>
+            ${clientDate(
+              project.estimated_completion
+            )}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="dashboard-action-button"
+        type="button"
+        data-main-project-button
+      >
+
+        View project
+
+        <span>→</span>
+
+      </button>
+
+    `;
+
+
+    container
+      .querySelector(
+        '[data-main-project-button]'
+      )
+      ?.addEventListener(
+        'click',
+        () => {
+
+          showSection(
+            'projects'
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =======================================================
+     ALL PROJECTS
+  ======================================================= */
+
+  function renderProjects() {
+
+    const container =
+      document.querySelector(
+        '[data-client-projects]'
+      );
+
+    if (!container) return;
+
+
+    if (!state.projects.length) {
+
+      container.innerHTML = `
+
+        <div class="empty-workspace">
+
+          <div class="empty-icon">
+            □
+          </div>
+
+          <h2>
+            No projects yet.
+          </h2>
+
+          <p>
+            You don't currently have any
+            projects assigned to your account.
+            When the studio creates one, it
+            will appear here.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML = `
+
+      <div class="client-project-list">
+
+        ${state.projects.map(
+          project => {
+
+            const progress =
+              safeProgress(
+                project.progress
+              );
+
+            return `
+
+              <article class="workspace-card client-project-card">
+
+                <div class="workspace-card-header">
+
+                  <div>
+
+                    <span class="section-label">
+
+                      ${esc(
+                        prettyStatus(
+                          project.status
+                        )
+                      )}
+
+                    </span>
+
+                    <h2>
+                      ${esc(
+                        project.name
+                      )}
+                    </h2>
+
+                  </div>
+
+
+                  <span class="project-status">
+
+                    ${progress}%
+
+                  </span>
+
+                </div>
+
+
+                <p class="muted">
+
+                  ${esc(
+                    project.description ||
+                    'No project description yet.'
+                  )}
+
+                </p>
+
+
+                <div class="project-progress">
+
+                  <div class="progress-information">
+
+                    <span>
+                      Progress
+                    </span>
+
+                    <strong>
+                      ${progress}%
+                    </strong>
+
+                  </div>
+
+
+                  <div class="progress-track">
+
+                    <div
+                      class="progress-bar"
+                      style="width:${progress}%"
+                    ></div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="project-details">
+
+                  <div>
+
+                    <small>
+                      STAGE
+                    </small>
+
+                    <strong>
+
+                      ${esc(
+                        project.stage ||
+                        'Planning'
+                      )}
+
+                    </strong>
+
+                  </div>
+
+
+                  <div>
+
+                    <small>
+                      START DATE
+                    </small>
+
+                    <strong>
+
+                      ${clientDate(
+                        project.started_at
+                      )}
+
+                    </strong>
+
+                  </div>
+
+
+                  <div>
+
+                    <small>
+                      EST. COMPLETION
+                    </small>
+
+                    <strong>
+
+                      ${clientDate(
+                        project.estimated_completion
+                      )}
+
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              </article>
+
+            `;
+
+          }
+        ).join('')}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     CLIENT ENQUIRIES
+  ======================================================= */
+
+  function renderMessages() {
+
+    const container =
+      document.querySelector(
+        '[data-client-messages]'
+      );
+
+    if (!container) return;
+
+
+    if (!state.messages.length) {
+
+      container.innerHTML = `
+
+        <div class="message-history">
+
+          <div class="empty-messages">
+
+            <span>✉</span>
+
+            <h2>
+              No enquiries yet.
+            </h2>
+
+            <p>
+              Project enquiries associated
+              with your account will appear
+              here.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML = `
+
+      <div class="client-message-list">
+
+        ${state.messages.map(
+          message => `
+
+            <article class="client-message-card">
+
+              <div class="client-message-top">
+
+                <div>
+
+                  <span class="section-label">
+                    ENQUIRY
+                  </span>
+
+                  <h3>
+
+                    ${esc(
+                      message.company ||
+                      'Project enquiry'
+                    )}
+
+                  </h3>
+
+                </div>
+
+
+                <span class="project-status">
+
+                  ${esc(
+                    prettyStatus(
+                      message.status
+                    )
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <p>
+
+                ${esc(
+                  message.message
+                )}
+
+              </p>
+
+
+              <div class="client-message-meta">
+
+                ${
+                  message.budget
+                    ? `
+                      <span>
+                        Budget:
+                        <strong>
+                          ${esc(message.budget)}
+                        </strong>
+                      </span>
+                    `
+                    : ''
+                }
+
+                <span>
+
+                  Sent:
+                  <strong>
+
+                    ${clientDateTime(
+                      message.created_at
+                    )}
+
+                  </strong>
+
+                </span>
+
+              </div>
+
+            </article>
+
+          `
+        ).join('')}
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     ACTIVITY
+  ======================================================= */
+
+  function renderActivity() {
+
+    renderActivityInto(
+      '[data-overview-activity]',
+      state.activity.slice(0, 4)
+    );
+
+
+    renderActivityInto(
+      '[data-client-activity]',
+      state.activity
+    );
+
+  }
+
+
+  function renderActivityInto(
+    selector,
+    activity
+  ) {
+
+    const container =
+      document.querySelector(
+        selector
+      );
+
+    if (!container) return;
+
+
+    if (!activity.length) {
+
+      container.innerHTML = `
+
+        <div class="empty-messages">
+
+          <span>↻</span>
+
+          <h2>
+            No activity yet.
+          </h2>
+
+          <p>
+            Updates made to your projects
+            will appear here.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      activity.map(item => `
+
+        <div class="activity-item">
+
+          <span class="activity-dot">
+          </span>
+
+
+          <div>
+
+            <strong>
+              ${esc(item.title)}
+            </strong>
+
+            <p>
+              ${esc(
+                item.description ||
+                ''
+              )}
+            </p>
+
+            ${
+              item.project_name
+                ? `
+                  <p>
+                    ${esc(
+                      item.project_name
+                    )}
+                  </p>
+                `
+                : ''
+            }
+
+          </div>
+
+
+          <small>
+
+            ${clientDateTime(
+              item.created_at
+            )}
+
+          </small>
+
+        </div>
+
+      `).join('');
+
+  }
+
+
+  /* =======================================================
+     CLIENT PORTAL HELPERS
+  ======================================================= */
+
+  function setPortalText(
+    selector,
+    value
+  ) {
+
+    const element =
+      document.querySelector(
+        selector
+      );
+
+    if (element) {
+
+      element.textContent =
+        value;
+
+    }
+
+  }
+
+
+  function safeProgress(value) {
+
+    let number =
+      Number(value);
+
+    if (!Number.isFinite(number)) {
+      number = 0;
+    }
+
+    return Math.max(
+      0,
+      Math.min(
+        100,
+        Math.round(number)
+      )
+    );
+
+  }
+
+
+  function prettyStatus(value) {
+
+    const status =
+      String(
+        value || 'unknown'
+      )
+        .replace(/[-_]/g, ' ');
+
+
+    return status
+      .replace(
+        /\b\w/g,
+        letter =>
+          letter.toUpperCase()
+      );
+
+  }
+
+
+  function clientDate(value) {
+
+    if (!value) {
+      return 'Not set';
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+
+      return 'Not set';
+
+    }
+
+
+    return date.toLocaleDateString(
+      undefined,
+      {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      }
+    );
+
+  }
+
+
+  function clientDateTime(value) {
+
+    if (!value) {
+      return '—';
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+
+      return '—';
+
+    }
+
+
+    return date.toLocaleString(
+      undefined,
+      {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }
+    );
+
+  }
+
+
+  /* =======================================================
+     START CLIENT PORTAL
+  ======================================================= */
+
+  await loadPortal();
+
+    }
