@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+      Sales Application — Frictionlesswebs
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+  <body class="sales-page">
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="brand" href="index.html">
+          frictionlesswebs
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">
+            Home
+          </a>
+          <a href="sales-apply.html">
+            Apply
+          </a>
+          <a href="sales-login.html">
+            Sales login
+          </a>
+        </nav>
+      </div>
+    </header>
+<main class="sales-shell">
+  <div class="sales-wrap">
+    <div class="sales-grid">
+      <section class="sales-card">
+        <div class="sales-kicker">
+          Sales application
+        </div>
+        <h1>
+          Join the team.
+        </h1>
+        <p class="sales-muted">
+          Apply to become a freelance,
+          commission-based Frictionlesswebs sales representative. Every application is reviewed before activation.
+        </p>
+        <p>
+          <strong>
+            Commission:
+          </strong> 
+          Starter R500 · Business R750 · Business Plus R1,000 · Pro R1,250 · Advanced R1,500 · eligible Custom projects 10%.
+        </p>
+      </section>
+<section class="sales-card">
+  <form class="sales-form" id="salesApply">
+    <div class="two">
+      <input name="firstName" placeholder="First name *" required><input name="surname" placeholder="Surname *" required>
+    </div>
+    <div class="two">
+      <input name="age" type="number" min="15" max="100" placeholder="Age *" required>
+      <input name="email" type="email" placeholder="Email *" required>
+    </div>
+    <div class="two">
+      <input name="whatsapp" placeholder="WhatsApp number *" required>
+      <input name="city" placeholder="City / town">
+    </div>
+    <input name="province" placeholder="Province">
+    <textarea name="experience" placeholder="Sales experience (optional)">
+      
+    </textarea>
+    <textarea name="motivation" placeholder="Why would you like to sell for Frictionlesswebs? *" required>
+      
+    </textarea>
+    <label class="sales-check">
+      <input type="checkbox" name="commissionAck" required>
+      I understand this is a freelance commission-based opportunity with no fixed salary.
+    </label>
+    <label class="sales-check">
+      <input type="checkbox" name="privacyAck" required>
+      I agree that Frictionlesswebs may use these details to review and manage my application.
+    </label>
+    <button class="sales-btn">Submit application</button><div id="msg" class="sales-hidden"></div></form></section></div></div></main>
+<script src="config.js"></script><script src="sales-common.js"></script><script>
+document.querySelector('#salesApply').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=Object.fromEntries(f);b.commissionAck=!!f.get('commissionAck');b.privacyAck=!!f.get('privacyAck');try{const d=await salesApi('/api/sales/apply',{method:'POST',body:JSON.stringify(b)});sflash(document.querySelector('#msg'),d.message);e.target.reset()}catch(x){sflash(document.querySelector('#msg'),x.message,true)}};
+</script></body></html>
