@@ -3611,3 +3611,31 @@ button, input, textarea, select { max-width: 100%; }
   .auth-panel { padding-left: 16px; padding-right: 16px; }
   .portal-main, .admin-main { padding-left: 12px; padding-right: 12px; }
 }
+
+
+/* ===== Sales portal ===== */
+.sales-page{background:#090909;color:#f5f5f2;min-height:100vh}
+.sales-wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+.sales-shell{padding:64px 0}
+.sales-hero{padding:72px 0 36px}
+.sales-hero h1,.sales-shell h1{font-size:clamp(2.4rem,7vw,5.5rem);line-height:.94;letter-spacing:-.055em;margin:.2em 0}
+.sales-kicker{color:#dfff00;text-transform:uppercase;font-size:.78rem;font-weight:900;letter-spacing:.12em}
+.sales-muted{color:#9b9b95}
+.sales-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.sales-card{grid-column:span 6;background:#111;border:1px solid #292929;border-radius:22px;padding:22px}
+.sales-card.full{grid-column:span 12}.sales-card.third{grid-column:span 4}
+.sales-form{display:grid;gap:13px}
+.sales-form .two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.sales-form input,.sales-form textarea,.sales-form select,.sales-table input,.sales-table select{width:100%;background:#0d0d0d;color:#f5f5f2;border:1px solid #292929;border-radius:12px;padding:12px 13px;font:inherit}
+.sales-form textarea{min-height:110px;resize:vertical}
+.sales-check{display:flex;gap:9px;align-items:flex-start;color:#9b9b95}.sales-check input{width:auto;margin-top:5px}
+.sales-btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:999px;background:#dfff00;color:#090909;padding:12px 18px;font-weight:900;cursor:pointer;text-decoration:none}
+.sales-btn.alt{background:transparent;color:#f5f5f2;border:1px solid #292929}
+.sales-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.sales-notice{padding:13px 15px;border-radius:13px;background:#15180a;border:1px solid #3a4100}.sales-notice.bad{background:#251111;border-color:#5c2525}
+.sales-hidden{display:none!important}
+.sales-kpi{font-size:2rem;font-weight:900}.sales-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;color:#9b9b95}
+.sales-ref{display:flex;gap:8px}.sales-ref input{flex:1}
+.sales-agreement{max-height:330px;overflow:auto;background:#0c0c0c;border:1px solid #292929;border-radius:14px;padding:16px}
+.sales-table-wrap{overflow:auto;border:1px solid #292929;border-radius:16px}.sales-table{width:100%;border-collapse:collapse;min-width:850px}.sales-table th,.sales-table td{padding:12px;border-bottom:1px solid #292929;text-align:left;font-size:.88rem}.sales-table th{color:#9b9b95;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:760px){.sales-card,.sales-card.third{grid-column:span 12}.sales-form .two{grid-template-columns:1fr}.sales-ref{flex-direction:column}}
