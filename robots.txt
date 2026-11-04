@@ -4,5 +4,7 @@ Disallow: /admin.html
 Disallow: /dashboard.html
 Disallow: /login.html
 Disallow: /register.html
+Disallow: /sales-admin.html
+Disallow: /sales-login.html
 
 Sitemap: https://frictionlesswebs.onrender.com/sitemap.xml
